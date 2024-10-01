@@ -6,7 +6,7 @@
   tasks:
     - name: Copy Update Script
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../update-attack-vm.sh"
+        src: "{{ playbook_dir }}/../vm-update.sh"
         dest: /usr/bin/vm-update
         owner: root
         group: root
