@@ -7,7 +7,7 @@
     - name: Copy Update Script
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../update-attack-vm.sh"
-        dest: /home/e1-attack/update-attack-vm.sh
+        dest: /usr/bin/update-vm.sh
         owner: root
         group: root
         mode: "0755"
