@@ -23,6 +23,7 @@
 
     - name: Install Random APT Packages
       ansible.builtin.apt:
+        update_cache: true
         pkg:
           - python-is-python3
           - git
