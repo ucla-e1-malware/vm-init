@@ -20,11 +20,11 @@ if needs_install software-properties-common; then
     apt install software-properties-common
 fi
 
-if needs_install ansible || needs_install ansible-pull; then
-    echo "⚙️ Installing ansible..."
+if needs_install ansible; then
+    echo "🐮 Installing Ansible..."
     add-apt-repository --yes --update ppa:ansible/ansible
-    apt install ansible ansible-pull
+    apt install ansible
 fi
 
-echo "⚙️ Pulling ansible config..."
+echo "📥 Pulling ansible config..."
 ansible-pull -U https://github.com/ucla-e1-malware/vm-init playbooks/attack.yaml
