@@ -8,22 +8,26 @@ if [ "$(id -u)" -ne 0 ]; then
   exit $?
 fi
 
+die () {
+  echo "❌ $1" >&2
+}
+
 # returns true if the package $1 is not installed
 needs_install () {
     [ "$(dpkg -l "$1" > /dev/null 2>&1; echo $?)" -eq 1 ]
 }
 
-apt update
-
 if needs_install software-properties-common; then
     echo "⚙️ Installing software-properties-common..."
-    apt install software-properties-common
+    apt update || die "Failed to run apt update"
+    apt install software-properties-common || die "Failed to install software-properties-common"
 fi
 
 if needs_install ansible; then
     echo "🐮 Installing Ansible..."
-    add-apt-repository --yes --update ppa:ansible/ansible
-    apt install ansible
+    add-apt-repository --yes --update ppa:ansible/ansible || die "Failed to add Ansible PPA"
+    apt update || die "Failed to run apt update"
+    apt install ansible || die "Failed to install Ansible"
 fi
 
 echo "📥 Pulling ansible config..."
