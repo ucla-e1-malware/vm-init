@@ -1,0 +1,25 @@
+---
+- name: Update Attack VMs
+  hosts: attack
+  remote_user: root
+
+  tasks:
+    - name: This Course Sponsored by Berkeley
+      ansible.builtin.import_tasks: tasks/use-berkeley-mirrors.yaml
+      when: ansible_architecture == "aarch64"
+
+    - name: Install Random APT Packages
+      ansible.builtin.apt:
+        pkg:
+          - python-is-python3
+          - git
+          - nano
+          - open-vm-tools
+          - open-vm-tools-desktop
+
+    - name: Pull Scavenger Hunt
+      ansible.builtin.git:
+        repo: https://github.com/ucla-e1-malware/linux-scavenger-hunt.git
+        dest: ~/linux-scavenger-hunt
+        version: main
+        force: true
