@@ -4,6 +4,14 @@
   remote_user: root
 
   tasks:
+    - name: Copy Update Script
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../update-attack-vm.sh"
+        dest: /home/e1-attack/update-attack-vm.sh
+        owner: root
+        group: root
+        mode: "0755"
+
     - name: This Course Sponsored by Berkeley
       ansible.builtin.import_tasks: tasks/use-berkeley-mirrors.yaml
       when: ansible_architecture == "aarch64"
