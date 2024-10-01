@@ -18,8 +18,10 @@
           - open-vm-tools-desktop
 
     - name: Pull Scavenger Hunt
+      become: true
+      become_user: e1-attack
       ansible.builtin.git:
         repo: https://github.com/ucla-e1-malware/linux-scavenger-hunt.git
-        dest: ~/linux-scavenger-hunt
+        dest: /home/e1-attack/linux-scavenger-hunt
         version: main
         force: true
