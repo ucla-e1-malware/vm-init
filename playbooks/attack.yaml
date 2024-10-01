@@ -12,6 +12,11 @@
         group: root
         mode: "0755"
 
+    - name: Save 2 Minutes of Boot Time With This One Simple Trick
+      ansible.builtin.systemd_service:
+        name: systemd-networkd-wait-online.service
+        masked: true
+
     - name: This Course Sponsored by Berkeley
       ansible.builtin.import_tasks: tasks/use-berkeley-mirrors.yaml
       when: ansible_architecture == "aarch64"
