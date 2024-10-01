@@ -10,7 +10,14 @@
         dest: /usr/bin/vm-update
         owner: root
         group: root
-        mode: "4755"
+        mode: "0755"
+
+    - name: Allow Update Script to be Run Without a Password
+      community.general.sudoers:
+        name: vm-update-passwordless
+        group: e1-attack
+        commands: /usr/bin/vm-update
+        nopassword: true
 
     - name: Save 2 Minutes of Boot Time With This One Simple Trick
       ansible.builtin.systemd_service:

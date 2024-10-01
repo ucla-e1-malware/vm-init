@@ -4,7 +4,7 @@
 
 # become root (you should be able to understand this block by the end of the course :D)
 if [ "$(id -u)" -ne 0 ]; then
-  pkexec $0
+  sudo $0
   exit $?
 fi
 
