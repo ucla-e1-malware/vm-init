@@ -1,5 +1,5 @@
 ---
-- name: Update Attack VMs
+- name: Update Attack VM
   hosts: localhost
   remote_user: root
 
