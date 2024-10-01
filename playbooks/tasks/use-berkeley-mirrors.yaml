@@ -1,10 +1,10 @@
 ---
-- name: Remove Default Ubuntu Repos
+- name: ARM - Remove Default Ubuntu Repos
   ansible.builtin.deb822_repository:
     name: ubuntu
     enabled: false
 
-- name: Set Ubuntu Updates Repo
+- name: ARM - Set Ubuntu Updates Repo
   ansible.builtin.deb822_repository:
     name: e1-malware-updates
     types: deb
@@ -13,7 +13,7 @@
     components: [main, restricted, universe, multiverse]
     signed_by: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 
-- name: Set Ubuntu Security Repo
+- name: ARM - Set Ubuntu Security Repo
   ansible.builtin.deb822_repository:
     name: e1-malware-security
     types: deb
