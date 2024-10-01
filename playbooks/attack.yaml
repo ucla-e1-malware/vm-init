@@ -38,6 +38,7 @@
           - openssh-server
           - open-vm-tools
           - open-vm-tools-desktop
+          - neofetch
 
     - name: Pull Scavenger Hunt
       become: true
