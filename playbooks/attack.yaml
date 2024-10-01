@@ -1,6 +1,6 @@
 ---
 - name: Update Attack VM
-  hosts: localhost
+  hosts: e1-attack
   remote_user: root
 
   tasks:

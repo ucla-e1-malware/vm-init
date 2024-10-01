@@ -33,4 +33,4 @@ if needs_install ansible; then
 fi
 
 echo "📥 Pulling Ansible config..."
-ansible-pull -U https://github.com/ucla-e1-malware/vm-init playbooks/attack.yaml
+ansible-pull -U https://github.com/ucla-e1-malware/vm-init -i 'e1-attack,' playbooks/attack.yaml
