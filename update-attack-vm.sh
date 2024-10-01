@@ -9,7 +9,9 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 die () {
+  EXIT_CODE=$?
   echo "❌ $1" >&2
+  exit $EXIT_CODE
 }
 
 # returns true if the package $1 is not installed
