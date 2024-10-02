@@ -34,12 +34,6 @@ autoinstall:
 
   # note: the VM disk size should be (at least) 25 GB
 
-  identity:
-    hostname: e1-attack
-    realname: e1-attack
-    username: e1-attack
-    # the password is also e1-attack
-    password: $6$4rkRwfAkZFoQFv9a$.s6W/EIJYj5UQcJ5THKHkTzwHKI8jp5P8YdVlIESHEA1plICaP9QiqLhmRc2dLq5ReBFeopxTi7wdaxhWvDqV.
   oem:
     install: auto
 
@@ -88,10 +82,21 @@ autoinstall:
     install-server: true
 
   user-data:
-    user: e1-attack
+    hostname: e1-attack
+    create_hostname_file: true
+
+    users:
+      - name: e1-attack
+        gecos: e1-attack
+        groups: adm, cdrom, dip, lxd, plugdev, sudo
+        shell: /bin/bash
+        lock_passwd: False
+
+    chpasswd:
+      users:
+        - name: e1-attack
+          password: $6$4rkRwfAkZFoQFv9a$.s6W/EIJYj5UQcJ5THKHkTzwHKI8jp5P8YdVlIESHEA1plICaP9QiqLhmRc2dLq5ReBFeopxTi7wdaxhWvDqV.
+      expire: true
 
     runcmd:
       - wget -O- https://raw.githubusercontent.com/ucla-e1-malware/vm-init/refs/heads/main/vm-update.sh | bash
-    
-    chpasswd:
-      expire: true
