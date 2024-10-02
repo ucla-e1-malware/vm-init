@@ -118,9 +118,16 @@ autoinstall:
 
   packages:
     - software-properties-common
+    - python-is-python3
+    - wget
+    - git
     - ansible
 
   ssh:
     allow-pw: true
     authorized-keys: []
     install-server: true
+
+  late-commands:
+    curtin in-target -- wget -O- https://raw.githubusercontent.com/ucla-e1-malware/vm-init/refs/heads/main/vm-update.sh | bash
+    curtin in-target -- passwd --expire e1-attack
