@@ -70,11 +70,15 @@ autoinstall:
   updates: security
 
   packages:
+    # bootstrap ansible
     - software-properties-common
     - python-is-python3
     - wget
     - git
     - ansible
+    # these need a restart to apply so let's add them here
+    - open-vm-tools
+    - open-vm-tools-desktop
 
   ssh:
     allow-pw: true
@@ -90,7 +94,7 @@ autoinstall:
         gecos: e1-attack
         groups: adm, cdrom, dip, lxd, plugdev, sudo
         shell: /bin/bash
-        lock_passwd: False
+        lock_passwd: false
 
     chpasswd:
       users:
