@@ -31,18 +31,25 @@ case "$(hostname)" in
    (Did you try running this on your host machine by accident?)' ;;
 esac
 
+# bootstrap git
+if needs_install git; then
+    echo "⚙️ Installing git..."
+    apt update || die "Failed to run apt update"
+    apt install -y git || die "Failed to install git"
+fi
+
 # bootstrap ansible
 if needs_install software-properties-common; then
     echo "⚙️ Installing software-properties-common..."
     apt update || die "Failed to run apt update"
-    apt install software-properties-common || die "Failed to install software-properties-common"
+    apt install -y software-properties-common || die "Failed to install software-properties-common"
 fi
 
 if needs_install ansible; then
     echo "🐮 Installing Ansible..."
     add-apt-repository --yes --update ppa:ansible/ansible || die "Failed to add the Ansible PPA"
     apt update || die "Failed to run apt update"
-    apt install ansible || die "Failed to install Ansible"
+    apt install -y ansible || die "Failed to install Ansible"
 fi
 
 # run ansible-pull!
