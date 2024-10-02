@@ -90,11 +90,8 @@ autoinstall:
   user-data:
     user: e1-attack
 
-    ansible:
-      pull:
-        url: https://github.com/ucla-e1-malware/vm-init
-        inventory: "e1-attack,"
-        playbook_name: playbooks/e1-attack.yaml
+    runcmd:
+      - wget -O- https://raw.githubusercontent.com/ucla-e1-malware/vm-init/refs/heads/main/vm-update.sh | bash
     
     chpasswd:
       expire: true
