@@ -39,7 +39,7 @@ autoinstall:
     realname: e1-attack
     username: e1-attack
     # the password is also e1-attack
-    password: $6$4rkRwfAkZFoQFv9a$.s6W/EIJYj5UQcJ5THKHkTzwHKI8jp5P8YdVlIESHEA1plICaP9QiqLhmRc2dLq5ReBFeopxTi7wdaxhWvDqV
+    password: $6$4rkRwfAkZFoQFv9a$.s6W/EIJYj5UQcJ5THKHkTzwHKI8jp5P8YdVlIESHEA1plICaP9QiqLhmRc2dLq5ReBFeopxTi7wdaxhWvDqV.
   oem:
     install: auto
 
