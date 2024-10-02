@@ -33,47 +33,6 @@ autoinstall:
     install: false
 
   # note: the VM disk size should be (at least) 25 GB
-  # storage:
-  #   config:
-  #   - ptable: gpt
-  #     path: /dev/sda
-  #     wipe: superblock-recursive
-  #     preserve: false
-  #     name: ''
-  #     grub_device: true
-  #     id: disk-sda
-  #     type: disk
-
-  #   - device: disk-sda
-  #     size: 1048576
-  #     flag: bios_grub
-  #     number: 1
-  #     preserve: false
-  #     offset: 1048576
-  #     path: /dev/sda1
-  #     id: partition-0
-  #     type: partition
-
-  #   - device: disk-sda
-  #     size: 26840399872
-  #     wipe: superblock
-  #     number: 2
-  #     preserve: false
-  #     offset: 2097152
-  #     path: /dev/sda2
-  #     id: partition-1
-  #     type: partition
-
-  #   - fstype: ext4
-  #     volume: partition-1
-  #     preserve: false
-  #     id: format-0
-  #     type: format
-
-  #   - path: /
-  #     device: format-0
-  #     id: mount-0
-  #     type: mount
 
   identity:
     hostname: e1-attack
@@ -128,6 +87,14 @@ autoinstall:
     authorized-keys: []
     install-server: true
 
-  late-commands:
-    - curtin in-target -- wget -O- https://raw.githubusercontent.com/ucla-e1-malware/vm-init/refs/heads/main/vm-update.sh | bash
-    - curtin in-target -- passwd --expire e1-attack
+  user-data:
+    user: e1-attack
+
+    ansible:
+      pull:
+        url: https://github.com/ucla-e1-malware/vm-init
+        inventory: "e1-attack,"
+        playbook_name: playbooks/e1-attack.yaml
+    
+    chpasswd:
+      expire: true
