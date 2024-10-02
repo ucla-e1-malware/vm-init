@@ -1,0 +1,126 @@
+#cloud-config
+
+# (the above line *must not* have a space between the octothorpe and cloud-config)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# E1 Malware e1-attack VM Autoinstall Config
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html
+
+autoinstall:
+  version: 1
+
+  locale: en_US.UTF-8
+
+  keyboard:
+    layout: us
+    toggle: null
+    variant: ''
+
+  network:
+    ethernets:
+      ens33:
+        dhcp4: true
+    version: 2
+
+  kernel:
+    package: linux-generic-hwe-24.04
+  source:
+    id: ubuntu-desktop-minimal
+    search_drivers: false
+  codecs:
+    install: true
+  drivers:
+    install: false
+
+  # note: the VM disk size should be (at least) 25 GB
+  # storage:
+  #   config:
+  #   - ptable: gpt
+  #     path: /dev/sda
+  #     wipe: superblock-recursive
+  #     preserve: false
+  #     name: ''
+  #     grub_device: true
+  #     id: disk-sda
+  #     type: disk
+
+  #   - device: disk-sda
+  #     size: 1048576
+  #     flag: bios_grub
+  #     number: 1
+  #     preserve: false
+  #     offset: 1048576
+  #     path: /dev/sda1
+  #     id: partition-0
+  #     type: partition
+
+  #   - device: disk-sda
+  #     size: 26840399872
+  #     wipe: superblock
+  #     number: 2
+  #     preserve: false
+  #     offset: 2097152
+  #     path: /dev/sda2
+  #     id: partition-1
+  #     type: partition
+
+  #   - fstype: ext4
+  #     volume: partition-1
+  #     preserve: false
+  #     id: format-0
+  #     type: format
+
+  #   - path: /
+  #     device: format-0
+  #     id: mount-0
+  #     type: mount
+
+  identity:
+    hostname: e1-attack
+    realname: e1-attack
+    username: e1-attack
+    # the password is also e1-attack
+    password: $6$4rkRwfAkZFoQFv9a$.s6W/EIJYj5UQcJ5THKHkTzwHKI8jp5P8YdVlIESHEA1plICaP9QiqLhmRc2dLq5ReBFeopxTi7wdaxhWvDqV
+  oem:
+    install: auto
+
+  timezone: America/Los_Angeles
+
+  apt:
+    fallback: offline-install
+    geoip: true
+    disable_components: []
+    preserve_sources_list: false
+    mirror-selection:
+      primary:
+      - country-mirror
+      - arches: &primary-arches
+        - amd64
+        - i386
+        uri: http://archive.ubuntu.com/ubuntu/
+      - arches: &port-arches
+        - s390x
+        - arm64
+        - armhf
+        - powerpc
+        - ppc64el
+        - riscv64
+        uri: http://mirrors.ocf.berkeley.edu/ubuntu-ports/
+    security:
+    - arches: *primary-arches
+      uri: http://security.ubuntu.com/ubuntu/
+    - arches: *port-arches
+      uri: http://mirrors.ocf.berkeley.edu/ubuntu-ports/
+    sources:
+      ansible-ubuntu-ansible:
+        source: ppa:ansible/ansible
+  updates: security
+
+  packages:
+    - software-properties-common
+    - ansible
+
+  ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
