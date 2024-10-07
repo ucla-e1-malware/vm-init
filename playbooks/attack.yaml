@@ -39,6 +39,7 @@
           - open-vm-tools
           - open-vm-tools-desktop
           - neofetch
+          - gh
 
     - name: Pull Scavenger Hunt
       become: true
