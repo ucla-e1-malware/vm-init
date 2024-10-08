@@ -22,9 +22,9 @@ needs_install () {
 # figure out which VM we're on
 playbook=''
 case "$(hostname)" in
-  'e1-attack')
+  'e1-attack'|'e1-attack.local')
     playbook='attack' ;;
-  'e1-target')
+  'e1-target'|'e1-target.local')
     playbook='target' ;;
   *)
     die 'This script can only be run on either the e1-attack or e1-target VMs.
@@ -54,4 +54,4 @@ fi
 
 # run ansible-pull!
 echo "📥 Pulling Ansible config..."
-ansible-pull -U https://github.com/ucla-e1-malware/vm-init -i "$(hostname)," "playbooks/$playbook.yaml"
+ansible-pull -U https://github.com/ucla-e1-malware/vm-init -i "e1-$playbook," "playbooks/$playbook.yaml"

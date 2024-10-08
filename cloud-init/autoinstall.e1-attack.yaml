@@ -86,7 +86,7 @@ autoinstall:
     install-server: true
 
   user-data:
-    hostname: e1-attack
+    hostname: e1-attack.local
     create_hostname_file: true
 
     users:

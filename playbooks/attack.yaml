@@ -1,10 +1,10 @@
 ---
 - name: Update Attack VM
-  hosts: e1-attack
+  hosts: e1-attack,e1-attack.local
   remote_user: root
 
   tasks:
-    - name: Copy Update Script
+    - name: Copy/Update Update Script
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../vm-update.sh"
         dest: /usr/bin/vm-update
@@ -49,3 +49,7 @@
         dest: /home/e1-attack/linux-scavenger-hunt
         version: main
         force: true
+
+    - name: Update to .local hostname format
+      ansible.builtin.hostname:
+        name: e1-attack.local
