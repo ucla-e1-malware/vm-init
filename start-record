@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "Recording! Run 'exit' to stop."
+script -a -f -c "bash --rcfile ~/.record_rc" ~/recording
+echo "cats"

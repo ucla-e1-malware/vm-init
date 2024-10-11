@@ -12,6 +12,22 @@
         group: root
         mode: "0755"
 
+    - name: Copy/Update start-record command
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../start-record"
+        dest: /usr/bin/start-record
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Copy/Update start-record rc file
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../.record_rc"
+        dest: /home/e1-attack/.record_rc
+        owner: e1-attack
+        group: e1-attack
+        mode: "0644"
+
     - name: Allow Update Script to be Run Without a Password
       community.general.sudoers:
         name: vm-update-passwordless
