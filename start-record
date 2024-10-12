@@ -2,4 +2,4 @@
 
 echo "Recording! Run 'exit' to stop."
 script -a -f -c "bash --rcfile ~/.record_rc" ~/recording
-echo "cats"
+echo "Finished recording - file saved at ~/recording"
