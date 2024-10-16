@@ -89,7 +89,7 @@
       ansible.builtin.unarchive:
         remote_src: true
         src: /usr/share/wordlists/rockyou.txt.gz
-        dest: /usr/share/wordlists/rockyou.txt
+        dest: /usr/share/wordlists/
 
     - name: Update to .local hostname format
       ansible.builtin.hostname:
