@@ -78,6 +78,19 @@
         version: main
         force: true
 
+    - name: Download Wordlists
+      ansible.builtin.git:
+        repo: https://github.com/ucla-e1-malware/KaliLists.git
+        dest: /usr/share/wordlists
+        version: main
+        force: true
+
+    - name: Unzip rockyou.txt
+      ansible.builtin.unarchive:
+        remote_src: true
+        src: /usr/share/wordlists/rockyou.txt.gz
+        dest: /usr/share/wordlists/rockyou.txt
+
     - name: Update to .local hostname format
       ansible.builtin.hostname:
         name: e1-attack.local
