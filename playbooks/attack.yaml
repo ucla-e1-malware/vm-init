@@ -70,6 +70,7 @@
       community.general.snap:
         name:
           - searchsploit
+          - metasploit-framework
 
     - name: Pull Scavenger Hunt
       become: true
