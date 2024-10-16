@@ -64,6 +64,8 @@
           - net-tools
           - smbclient
           - nfs-common
+          - zip
+          - gzip
     - name: Install random snap Packages
       community.general.snap:
         name:
@@ -86,10 +88,9 @@
         force: true
 
     - name: Unzip rockyou.txt
-      ansible.builtin.unarchive:
-        remote_src: true
-        src: /usr/share/wordlists/rockyou.txt.gz
-        dest: /usr/share/wordlists/
+      ansible.builtin.command:
+        cmd: gunzip -k /usr/share/wordlists/rockyou.txt.gz
+        creates: /usr/share/wordlists/rockyou.txt
 
     - name: Update to .local hostname format
       ansible.builtin.hostname:
