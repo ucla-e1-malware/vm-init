@@ -57,6 +57,17 @@
           - neofetch
           - gh
           - sl
+          - openvpn
+          - curl
+          - wget
+          - nmap
+          - net-tools
+          - smbclient
+          - nfs-common
+    - name: Install random snap Packages
+      community.general.snap:
+        name:
+          - searchsploit
 
     - name: Pull Scavenger Hunt
       become: true
