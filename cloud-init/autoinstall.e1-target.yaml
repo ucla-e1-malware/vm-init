@@ -1,0 +1,106 @@
+#cloud-config
+
+# (the above line *must not* have a space between the octothorpe and cloud-config)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# E1 Malware e1-target VM Autoinstall Config
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html
+
+autoinstall:
+  version: 1
+
+  locale: en_US.UTF-8
+
+  keyboard:
+    layout: us
+    toggle: null
+    variant: ''
+
+  network:
+    ethernets:
+      ens33:
+        dhcp4: true
+    version: 2
+
+  kernel:
+    package: linux-generic-hwe-24.04
+  source:
+    id: ubuntu-desktop-minimal
+    search_drivers: false
+  codecs:
+    install: true
+  drivers:
+    install: false
+
+  # note: the VM disk size should be (at least) 25 GB
+
+  oem:
+    install: auto
+
+  timezone: America/Los_Angeles
+
+  apt:
+    fallback: offline-install
+    geoip: true
+    disable_components: []
+    preserve_sources_list: false
+    mirror-selection:
+      primary:
+      - country-mirror
+      - arches: &primary-arches
+        - amd64
+        - i386
+        uri: http://archive.ubuntu.com/ubuntu/
+      - arches: &port-arches
+        - s390x
+        - arm64
+        - armhf
+        - powerpc
+        - ppc64el
+        - riscv64
+        uri: http://mirrors.ocf.berkeley.edu/ubuntu-ports/
+    security:
+    - arches: *primary-arches
+      uri: http://security.ubuntu.com/ubuntu/
+    - arches: *port-arches
+      uri: http://mirrors.ocf.berkeley.edu/ubuntu-ports/
+    sources:
+      ansible-ubuntu-ansible:
+        source: ppa:ansible/ansible
+  updates: security
+
+  packages:
+    # bootstrap ansible
+    - software-properties-common
+    - python-is-python3
+    - wget
+    - git
+    - ansible
+    # these need a restart to apply so let's add them here
+    - open-vm-tools
+    - open-vm-tools-desktop
+
+  ssh:
+    allow-pw: true
+    authorized-keys: []
+    install-server: true
+
+  user-data:
+    hostname: e1-target.local
+    create_hostname_file: true
+
+    users:
+      - name: e1-target
+        gecos: e1-target
+        groups: adm, cdrom, dip, lxd, plugdev, sudo
+        shell: /bin/bash
+        lock_passwd: false
+
+    chpasswd:
+      users:
+        - name: e1-target
+          password: $6$OAwz8KW0BCVPEEq/$PDo.oZ7WpnDkV9H9PcNV95XnmmcOXnGS6.TEMHG5KrWY5Sx26ECbVEJstW.laqa05rgU4Dwd3/CtrggYVMxHO.
+      expire: true
+
+    runcmd:
+      - wget -O- https://raw.githubusercontent.com/ucla-e1-malware/vm-init/refs/heads/main/vm-update.sh | bash

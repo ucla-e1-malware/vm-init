@@ -4,6 +4,10 @@
   remote_user: root
 
   tasks:
+    - name: Update to .local hostname format
+      ansible.builtin.hostname:
+        name: e1-attack.local
+
     - name: Copy/Update Update Script
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../vm-update.sh"
@@ -95,7 +99,3 @@
       ansible.builtin.command:
         cmd: gunzip -k /usr/share/wordlists/rockyou.txt.gz
         creates: /usr/share/wordlists/rockyou.txt
-
-    - name: Update to .local hostname format
-      ansible.builtin.hostname:
-        name: e1-attack.local

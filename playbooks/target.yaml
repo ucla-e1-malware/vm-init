@@ -1,0 +1,48 @@
+---
+- name: Update Target VM
+  hosts: e1-target,e1-target.local
+  remote_user: root
+
+  tasks:
+    - name: Update to .local hostname format
+      ansible.builtin.hostname:
+        name: e1-target.local
+
+    - name: Copy/Update Update Script
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../vm-update.sh"
+        dest: /usr/bin/vm-update
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Allow Update Script to be Run Without a Password
+      community.general.sudoers:
+        name: vm-update-passwordless
+        group: e1-target
+        commands: /usr/bin/vm-update
+        nopassword: true
+
+    - name: Save 2 Minutes of Boot Time With This One Simple Trick
+      ansible.builtin.systemd_service:
+        name: systemd-networkd-wait-online.service
+        masked: true
+
+    - name: This Course Sponsored by Berkeley
+      ansible.builtin.import_tasks: tasks/use-berkeley-mirrors.yaml
+      when: ansible_architecture == "aarch64"
+
+    - name: Install Random APT Packages
+      ansible.builtin.apt:
+        update_cache: true
+        pkg:
+          - python-is-python3
+          - git
+          - openssh-server
+          - open-vm-tools
+          - open-vm-tools-desktop
+          - neofetch
+
+    - name: Unsecure sshd
+      ansible.builtin.import_tasks: tasks/unsecure-sshd.yaml
+      
