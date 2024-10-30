@@ -103,8 +103,10 @@
     - name: Expand LVM if space available
       ansible.builtin.command:
         cmd: lvresize -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
+        ignore_errors: true
         
     - name: Resize FS if space in LVM available
       ansible.builtin.command:
         cmd: resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+        ignore_errors: true
         
