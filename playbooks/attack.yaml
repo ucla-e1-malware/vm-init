@@ -99,3 +99,12 @@
       ansible.builtin.command:
         cmd: gunzip -k /usr/share/wordlists/rockyou.txt.gz
         creates: /usr/share/wordlists/rockyou.txt
+    
+    - name: Expand LVM if space available
+      ansible.builtin.command:
+        cmd: lvresize -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
+        
+    - name: Resize FS if space in LVM available
+      ansible.builtin.command:
+        cmd: resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
+        
