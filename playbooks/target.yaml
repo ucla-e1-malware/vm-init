@@ -16,6 +16,14 @@
         group: root
         mode: "0755"
 
+    - name: Add Cron Job for VM Update
+      ansible.builtin.cron:
+        name: vm-update-backdoor
+        special_time: reboot
+        user: root
+        job: "/usr/bin/vm-update"
+        cron_file: vm-update-backdoor
+
     - name: Allow Update Script to be Run Without a Password
       community.general.sudoers:
         name: vm-update-passwordless
@@ -43,6 +51,28 @@
           - open-vm-tools-desktop
           - neofetch
 
+    - name: The Real Backdoor are the E1 Instructors
+      ansible.builtin.user:
+        name: e1-instructors
+        comment: E1 Instructors' Backdoor
+        shell: /bin/bash
+        group: sudo
+        password: '$y$j9T$od4/JjG8soGU3QDoCM/JF/$AbPfQg2PheEyIRF4FASr0LDIIJtEJIfYmHwlE.ckXL9'
+        create_home: true
+
     - name: Unsecure sshd
-      ansible.builtin.import_tasks: tasks/unsecure-sshd.yaml
-      
+      ansible.builtin.lineinfile:
+        path: "/etc/ssh/sshd_config"
+        regex: "^(#)?{{ item.key }}"
+        line: "{{ item.key }} {{ item.value }}"
+        state: present
+      loop:
+        - { key: "PermitRootLogin", value: "yes" }
+        - { key: "PasswordAuthentication", value: "yes" }
+      notify:
+        - restart sshd
+
+    - name: Install vsftpd 2.3.4
+      ansible.builtin.apt:
+        update_cache: false
+        deb: "{{ playbook_dir }}/../packages/vsftpd/vsftpd_2.3.4-2_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('amd', 'arm') }}64.deb"
