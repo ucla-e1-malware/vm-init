@@ -121,7 +121,7 @@
 
           # Port 21 is the standard FTP port.
           Port				2222
-        dest: /usr/local/etc/proftpd.conf
+        dest: /etc/proftpd/proftpd.conf
         owner: root
         group: root
         mode: "0644"
