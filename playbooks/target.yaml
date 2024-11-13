@@ -157,6 +157,7 @@
           ServerName			"ProFTPD Default Installation"
           ServerType			standalone
           DefaultServer			on
+          PidFile			/run/proftpd.pid
 
           # Port 21 is the standard FTP port.
           Port				2222
