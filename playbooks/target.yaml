@@ -156,7 +156,7 @@
           After=network-online.target nss-lookup.target local-fs.target remote-fs.target
 
           [Service]
-          Type=simple
+          Type=forking
           Environment=OPTIONS= CONFIG_FILE=/etc/proftpd/proftpd.conf
           EnvironmentFile=-/etc/default/proftpd
           ExecStartPre=/usr/sbin/proftpd --configtest -c $CONFIG_FILE $OPTIONS
