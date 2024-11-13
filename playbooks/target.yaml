@@ -126,6 +126,11 @@
         group: root
         mode: "0644"
     
+    - name: Mkdir /usr/local/var/
+      ansible.builtin.file:
+        path: /usr/local/var/
+        state: directory
+    
     - name: Install proftpd
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../packages/proftpd/proftpd_1.3.5_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
