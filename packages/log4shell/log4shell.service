@@ -1,0 +1,10 @@
+[Unit]
+Description=Log4Shell vulnerable server
+
+[Service]
+ExecStart=/usr/bin/java -jar /usr/sbin/log4shell.jar
+Type=simple
+WorkingDirectory=/usr/sbin/
+
+[Install]
+WantedBy=multi-user.target

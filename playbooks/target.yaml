@@ -62,6 +62,17 @@
           - neofetch
           - apache2
           - openjdk-11-jre-headless
+          - wget
+          - curl
+          - python3
+          - python3-pip
+          - python3-venv
+          - nano
+          - sl
+          - zip
+          - gzip
+
+
 
     - name: The Real Backdoor are the E1 Instructors
       ansible.builtin.user:
@@ -174,5 +185,27 @@
     - name: Start proftpd Service
       ansible.builtin.systemd_service:
         name: proftpd
+        state: started
+        enabled: true
+
+    - name: Install log4shell
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/log4shell/log4shell.jar"
+        dest: /usr/sbin/log4shell.jar
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Create log4shell service
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/log4shell/log4shell.service"
+        dest: /usr/lib/systemd/system/log4shell.service
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Start log4shell Service
+      ansible.builtin.systemd_service:
+        name: log4shell
         state: started
         enabled: true
