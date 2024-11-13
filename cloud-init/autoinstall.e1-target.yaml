@@ -84,6 +84,9 @@ autoinstall:
     allow-pw: true
     authorized-keys: []
     install-server: true
+  
+  identity:
+    hostname: e1-target.local
 
   user-data:
     hostname: e1-target.local
