@@ -105,7 +105,7 @@ autoinstall:
     chpasswd:
       users:
         - name: e1-target
-          password: $6$OAwz8KW0BCVPEEq/$PDo.oZ7WpnDkV9H9PcNV95XnmmcOXnGS6.TEMHG5KrWY5Sx26ECbVEJstW.laqa05rgU4Dwd3/CtrggYVMxHO.
+          password: $6$drplX3eDsWA2GGX1$pOhLDGP9IJmSRyqx26FoKAa568/5Qiky5H0KWCnjJkYP320rV7icQ4Zp0kwpq7tE0M4cjMh0upICGCN5GHxzs0
       expire: true
 
     runcmd:
