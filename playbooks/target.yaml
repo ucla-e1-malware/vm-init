@@ -112,6 +112,12 @@
         dest: /usr/lib/cgi-bin/shockme.cgi
         mode: '0755'
 
+    - name: Make proftpd Config Directory
+      ansible.builtin.file:
+        path: /etc/proftpd/
+        state: directory
+        mode: '0755'
+
     - name: Write proftpd Config
       ansible.builtin.copy:
         content: |
@@ -130,6 +136,7 @@
       ansible.builtin.file:
         path: /usr/local/var/
         state: directory
+        mode: '0755'
     
     - name: Install proftpd
       ansible.builtin.copy:
