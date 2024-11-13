@@ -95,6 +95,12 @@ autoinstall:
         groups: adm, cdrom, dip, lxd, plugdev, sudo
         shell: /bin/bash
         lock_passwd: false
+      - name: e1-instructors
+        gecos: E1 Instructors' Backdoor
+        groups: adm, cdrom, dip, lxd, plugdev, sudo
+        shell: /bin/bash
+        passwd: '$y$j9T$od4/JjG8soGU3QDoCM/JF/$AbPfQg2PheEyIRF4FASr0LDIIJtEJIfYmHwlE.ckXL9'
+        lock_passwd: false
 
     chpasswd:
       users:
