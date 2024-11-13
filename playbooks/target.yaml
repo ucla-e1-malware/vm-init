@@ -51,6 +51,7 @@
           - open-vm-tools-desktop
           - neofetch
           - apache2
+          - openjdk-11-jre-headless
 
     - name: The Real Backdoor are the E1 Instructors
       ansible.builtin.user:
