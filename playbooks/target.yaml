@@ -101,3 +101,56 @@
           echo '<!DOCTYPE html><html><head><title>🐣 chicken nugget?</title><style>h1{font-family:"Comic Sans MS",cursive;}</style></head><body><h1>🐣 shellshock'\''d! ⚡</h1></body></html>'
         dest: /usr/lib/cgi-bin/shockme.cgi
         mode: '0755'
+
+    - name: Write proftpd Config
+      ansible.builtin.copy:
+        content: |
+          ServerName			"ProFTPD Default Installation"
+          ServerType			standalone
+          DefaultServer			on
+
+          # Port 21 is the standard FTP port.
+          Port				2222
+        dest: /usr/local/etc/proftpd.conf
+        owner: root
+        group: root
+        mode: "0644"
+    
+    - name: Install proftpd
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/proftpd/proftpd_1.3.5_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
+        dest: /usr/sbin/proftpd
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Write proftpd Service
+      ansible.builtin.copy:
+        content: |
+          [Unit]
+          Description=ProFTPD FTP Server
+          Documentation=man:proftpd(8)
+          Wants=network-online.target
+          After=network-online.target nss-lookup.target local-fs.target remote-fs.target
+
+          [Service]
+          Type=forking
+          Environment=OPTIONS= CONFIG_FILE=/etc/proftpd/proftpd.conf
+          EnvironmentFile=-/etc/default/proftpd
+          ExecStartPre=/usr/sbin/proftpd --configtest -c $CONFIG_FILE $OPTIONS
+          ExecStart=/usr/sbin/proftpd -c $CONFIG_FILE $OPTIONS
+          ExecReload=/bin/kill -HUP $MAINPID
+          PIDFile=/run/proftpd.pid
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /usr/lib/systemd/system/proftpd.service
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Start proftpd Service
+      ansible.builtin.systemd_service:
+        name: proftpd
+        state: started
+        enabled: true
