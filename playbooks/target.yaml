@@ -76,7 +76,7 @@
     - name: Install vsftpd 2.3.4
       ansible.builtin.apt:
         update_cache: false
-        deb: "{{ playbook_dir }}/../packages/vsftpd/vsftpd_2.3.4-2_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('amd', 'arm') }}64.deb"
+        deb: "{{ playbook_dir }}/../packages/vsftpd/vsftpd_2.3.4-2_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64.deb"
     
     - name: Setup Apache2
       community.general.apache2_module:
@@ -85,7 +85,7 @@
     
     - name: Install Shellshock Bash
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../packages/bash_4.1-3/bash_4.1-3_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('amd', 'arm') }}64"
+        src: "{{ playbook_dir }}/../packages/bash_4.1-3/bash_4.1-3_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
         dest: /bin/bash_4.1-3
         owner: root
         group: root
