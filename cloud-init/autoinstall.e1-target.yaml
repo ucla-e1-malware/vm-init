@@ -92,9 +92,6 @@ autoinstall:
     password: '$y$j9T$od4/JjG8soGU3QDoCM/JF/$AbPfQg2PheEyIRF4FASr0LDIIJtEJIfYmHwlE.ckXL9'
 
   user-data:
-    hostname: e1-target.local
-    create_hostname_file: true
-
     users:
       - name: e1-target
         gecos: e1-target
