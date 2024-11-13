@@ -123,6 +123,28 @@
         dest: /usr/lib/cgi-bin/shockme.cgi
         mode: '0755'
 
+    - name: Install log4shell
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/log4shell/log4shell.jar"
+        dest: /usr/sbin/log4shell.jar
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Create log4shell service
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/log4shell/log4shell.service"
+        dest: /usr/lib/systemd/system/log4shell.service
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Start log4shell Service
+      ansible.builtin.systemd_service:
+        name: log4shell
+        state: started
+        enabled: true
+
     - name: Make proftpd Config Directory
       ansible.builtin.file:
         path: /etc/proftpd/
@@ -188,24 +210,3 @@
         state: started
         enabled: true
 
-    - name: Install log4shell
-      ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../packages/log4shell/log4shell.jar"
-        dest: /usr/sbin/log4shell.jar
-        owner: root
-        group: root
-        mode: "0644"
-
-    - name: Create log4shell service
-      ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../packages/log4shell/log4shell.service"
-        dest: /usr/lib/systemd/system/log4shell.service
-        owner: root
-        group: root
-        mode: "0644"
-
-    - name: Start log4shell Service
-      ansible.builtin.systemd_service:
-        name: log4shell
-        state: started
-        enabled: true
