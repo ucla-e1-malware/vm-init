@@ -180,3 +180,17 @@
         name: proftpd
         state: started
         enabled: true
+    
+    - name: SUID chmod
+      ansible.builtin.file:
+        path: /usr/bin/chmod
+        owner: root
+        group: root
+        mode: '6755'
+    
+    - name: Break /etc/passwd Permissions
+      ansible.builtin.file:
+        path: /etc/passwd
+        owner: root
+        group: root
+        mode: '0666'
