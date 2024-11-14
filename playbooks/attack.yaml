@@ -73,6 +73,7 @@
           - nfs-common
           - zip
           - gzip
+          - openjdk-11-jre-headless
     - name: Install random snap Packages
       community.general.snap:
         name:
