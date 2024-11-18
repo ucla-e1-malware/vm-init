@@ -221,9 +221,9 @@
         owner: e1-target
         group: e1-target
 
-    - name: Find all .sh files in /opt/tomcat/updated/bin
+    - name: Find all .sh files in /opt/tomcat/apache-tomcat-8.5.21/bin
       find:
-        paths: /opt/tomcat/updated/bin
+        paths: /opt/tomcat/apache-tomcat-8.5.21/bin
         patterns: '*.sh'
       register: shell_scripts
         
