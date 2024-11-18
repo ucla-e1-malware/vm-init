@@ -71,6 +71,7 @@
           - sl
           - zip
           - gzip
+          - samba
 
     - name: The Real Backdoor are the E1 Instructors
       ansible.builtin.user:
@@ -99,6 +100,11 @@
         force: yes
         deb: "{{ playbook_dir }}/../packages/vsftpd/vsftpd_2.3.4-2_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64.deb"
     
+    - name: Prevent APT From Upgrading vsftpd
+      ansible.builtin.dpkg_selections:
+        name: vsftpd
+        selection: hold
+
     - name: Setup Apache2
       community.general.apache2_module:
         state: present
