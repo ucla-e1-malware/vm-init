@@ -252,3 +252,16 @@
         name: tomcat
         state: started
         enabled: true
+
+    - name: Update Samba config
+      ansible.builtin.blockinfile:
+        path: /etc/samba/smb.conf
+        append_newline: true
+        prepend_newline: true
+        block: |
+          [homes]
+              comment = Home Directories
+              browseable = yes
+              read only = no
+      notify:
+        - restart samba
