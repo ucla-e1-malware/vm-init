@@ -194,3 +194,42 @@
         owner: root
         group: root
         mode: '0666'
+
+    - name: Copy Apache Tomcat to /opt/tomcat
+      ansible.builtin.unarchive:
+        src: "{{ playbook_dir }}/../packages/tomcat/apache-tomcat-8.5.21.tar.gz"
+        dst: /opt/tomcat
+    
+    - name: Change ownership of /opt/tomcat to e1-target
+      file:
+        path: /opt/tomcat
+        state: directory
+        recurse: yes
+        owner: e1-target
+        group: e1-target
+
+    - name: Find all .sh files in /opt/tomcat/updated/bin
+      find:
+        paths: /opt/tomcat/updated/bin
+        patterns: '*.sh'
+      register: shell_scripts
+        
+    - name: Ensure .sh files are executable
+      file:
+        path: "{{ item.path }}"
+        mode: '0755'
+      loop: "{{ shell_scripts.files }}"
+
+    - name: Write tomcat Service
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/tomcat/tomcat.service"
+        dest: /usr/lib/systemd/system/tomcat.service
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Start proftpd Service
+      ansible.builtin.systemd_service:
+        name: tomcat
+        state: started
+        enabled: true
