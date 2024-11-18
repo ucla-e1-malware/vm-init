@@ -224,7 +224,7 @@
     - name: Write tomcat Service
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../packages/tomcat/tomcat.service"
-        dest: /usr/lib/systemd/system/tomcat.service
+        dst: /usr/lib/systemd/system/tomcat.service
         owner: root
         group: root
         mode: "0644"
