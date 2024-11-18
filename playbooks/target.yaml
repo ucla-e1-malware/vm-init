@@ -96,6 +96,7 @@
     - name: Install vsftpd 2.3.4
       ansible.builtin.apt:
         update_cache: false
+        force: yes
         deb: "{{ playbook_dir }}/../packages/vsftpd/vsftpd_2.3.4-2_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64.deb"
     
     - name: Setup Apache2
