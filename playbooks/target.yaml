@@ -211,7 +211,7 @@
     - name: Extract Apache Tomcat to /opt/tomcat
       ansible.builtin.unarchive:
         src: "{{ playbook_dir }}/../packages/tomcat/apache-tomcat-8.5.21.tar.gz"
-        dst: /opt/tomcat/
+        dest: /opt/tomcat/
     
     - name: Change ownership of /opt/tomcat to e1-target
       file:
