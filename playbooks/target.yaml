@@ -196,10 +196,24 @@
         group: root
         mode: '0666'
 
+    - name: Debug resolved source path
+      ansible.builtin.debug:
+        msg: "{{ playbook_dir }}/../packages/tomcat/apache-tomcat-8.5.21.tar.gz"
+
     - name: Copy Apache Tomcat to /opt/tomcat
-      ansible.builtin.unarchive:
+      ansible.builtin.copy:
         src: "{{ playbook_dir }}/../packages/tomcat/apache-tomcat-8.5.21.tar.gz"
-        dst: /opt/tomcat
+        dest: /opt/tomcat/apache-tomcat-8.5.21.tar.gz
+        owner: e1-target
+        group: e1-target
+        mode: "0644"
+
+
+    - name: Extract Apache Tomcat to /opt/tomcat
+      ansible.builtin.unarchive:
+        src: /opt/tomcat/apache-tomcat-8.5.21.tar.gz
+        dst: /opt/tomcat/
+        remote_src: true
     
     - name: Change ownership of /opt/tomcat to e1-target
       file:
