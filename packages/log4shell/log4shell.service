@@ -6,5 +6,8 @@ ExecStart=/usr/bin/java -Dcom.sun.jndi.ldap.object.trustURLCodebase=true -jar /u
 Type=simple
 WorkingDirectory=/usr/sbin/
 
+User=e1-target
+Group=e1-target
+
 [Install]
 WantedBy=multi-user.target
