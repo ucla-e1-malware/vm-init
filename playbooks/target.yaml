@@ -73,6 +73,8 @@
           - gzip
           - samba
           - pexec
+          - php
+          - libapache2-mod-php
 
     - name: The Real Backdoor are the E1 Instructors
       ansible.builtin.user:
