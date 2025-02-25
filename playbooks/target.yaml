@@ -205,9 +205,17 @@
         owner: root
         group: root
         mode: '6755'
+
     - name: Break /etc/passwd Permissions
       ansible.builtin.file:
         path: /etc/passwd
+        owner: root
+        group: root
+        mode: '0666'
+
+    - name: Break /etc/shadow Permissions
+      ansible.builtin.file:
+        path: /etc/shadow
         owner: root
         group: root
         mode: '0666'
