@@ -283,3 +283,9 @@
               read only = no
       notify:
         - restart smbd
+
+  handlers:
+    - name: restart smbd
+      ansible.builtin.service:
+        name: smbd
+        state: smbd
