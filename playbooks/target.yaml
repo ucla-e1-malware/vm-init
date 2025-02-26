@@ -76,6 +76,7 @@
           - php
           - libapache2-mod-php
           - htop
+          - chrony
 
     - name: The Real Backdoor are the E1 Instructors
       ansible.builtin.user:
@@ -245,6 +246,18 @@
         owner: e1-target
         group: e1-target
 
+    - name: Edit the chrony configuration file to expose NTP server
+      ansible.builtin.blockinfile:
+        path: /etc/chrony/chrony.conf
+        block: |
+          # Allow NTP client access from local network
+          allow 192.168.0.0/16
+          # Serve time even if not synchronized to a time source
+          local stratum 10
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+      notify:
+        - restart chrony
+
     - name: Find all .sh files in /opt/tomcat/apache-tomcat-8.5.21/bin
       find:
         paths: /opt/tomcat/apache-tomcat-8.5.21/bin
@@ -288,4 +301,8 @@
     - name: restart smbd
       ansible.builtin.service:
         name: smbd
-        state: smbd
+        state: restarted
+    - name: restart chrony
+      ansible.builtin.service:
+        name: chrony
+        state: restarted
