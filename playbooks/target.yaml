@@ -86,8 +86,6 @@
         group: sudo
         password: '$y$j9T$od4/JjG8soGU3QDoCM/JF/$AbPfQg2PheEyIRF4FASr0LDIIJtEJIfYmHwlE.ckXL9'
         create_home: true
-    
-    - name: Downgrade sshd
 
     - name: Unsecure sshd
       ansible.builtin.lineinfile:
