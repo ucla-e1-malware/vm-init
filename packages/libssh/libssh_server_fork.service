@@ -1,0 +1,13 @@
+[Unit]
+Description=LibSSH Example Vulnerable Server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=forking
+ExecStart=/usr/sbin/ssh_server_fork --hostkey=/etc/ssh/ssh_host_rsa_key --ecdsakey=/etc/ssh/ssh_host_ecdsa_key --rsakey=/etc/ssh/ssh_host_rsa_key -p 24 0.0.0.0
+ExecReload=/bin/kill -HUP $MAINPID
+PIDFile=/run/libssh_ssh_server_fork.pid
+
+[Install]
+WantedBy=multi-user.target

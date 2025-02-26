@@ -86,6 +86,8 @@
         group: sudo
         password: '$y$j9T$od4/JjG8soGU3QDoCM/JF/$AbPfQg2PheEyIRF4FASr0LDIIJtEJIfYmHwlE.ckXL9'
         create_home: true
+    
+    - name: Downgrade sshd
 
     - name: Unsecure sshd
       ansible.builtin.lineinfile:
@@ -297,11 +299,39 @@
       notify:
         - restart smbd
 
+    - name: Install libssh
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/libssh/ssh_server_fork_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
+        dest: /usr/sbin/ssh_server_fork
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Write libssh Service
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/libssh/libssh_server_fork.service"
+        dest: /usr/lib/systemd/system/libssh_server_fork.service
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Start libssh Service
+      ansible.builtin.systemd_service:
+        name: libssh_server_fork
+        state: started
+        enabled: true
+
   handlers:
+    - name: restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+
     - name: restart smbd
       ansible.builtin.service:
         name: smbd
         state: restarted
+
     - name: restart chrony
       ansible.builtin.service:
         name: chrony
