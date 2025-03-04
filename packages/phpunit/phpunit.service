@@ -1,0 +1,14 @@
+[Unit]
+Description=PHPUnit Service for E1
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/phpunit
+ExecStart=/usr/bin/php -S 127.0.0.1:8888
+ExecReload=/bin/kill -HUP $MAINPID
+PIDFile=/run/libssh_ssh_server_fork.pid
+
+[Install]
+WantedBy=multi-user.target

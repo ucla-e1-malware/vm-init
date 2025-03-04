@@ -77,6 +77,7 @@
           - libapache2-mod-php
           - htop
           - chrony
+          - composer
 
     - name: The Real Backdoor are the E1 Instructors
       ansible.builtin.user:
@@ -295,22 +296,36 @@
               browseable = yes
               read only = no
       notify:
-        - restart smbd
-    
-    - name: Install PHP composer using local script
-      script: "{{ playbook_dir }}/../packages/phpunit/install_composer.sh"
+        - restart smbd'
+      
+    - name: Mkdir /root/phpunit
+      ansible.builtin.file:
+        path: /root/phpunit/
+        state: directory
+        mode: '0755'
     
     - name: Install PHPUnit using composer
       community.general.composer:
         command: require
         arguments: phpunit/phpunit:5.6.2
-        global_command: true
+        working_dir: /root/phpunit
         ignore_platform_reqs: true
       environment:
         COMPOSER_ALLOW_SUPERUSER: "1"
 
-    - name: Start PHP built-in server
-      ansible.builtin.shell: "nohup php -S 127.0.0.1:8888 > /dev/null 2>&1 &"
+    - name: Write phpunit Service
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/phpunit/phpunit.service"
+        dest: /usr/lib/systemd/system/phpunit.service
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Start phpunit Service
+      ansible.builtin.systemd_service:
+        name: phpunit
+        state: started
+        enabled: true
 
     - name: Install libssh
       ansible.builtin.copy:
