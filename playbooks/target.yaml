@@ -296,6 +296,19 @@
               read only = no
       notify:
         - restart smbd
+    
+    - name: Install PHP composer using local script
+      script: "{{ playbook_dir }}/../packages/phpunit/install_composer.sh"
+    
+    - name: Install PHPUnit using composer
+      community.general.composer:
+        command: require
+        arguments: phpunit/phpunit:5.6.2
+        global_command: true
+        ignore_platform_reqs: true
+
+    - name: Start PHP built-in server
+      ansible.builtin.shell: "nohup php -S 127.0.0.1:8888 > /dev/null 2>&1 &"
 
   handlers:
     - name: restart smbd
