@@ -105,7 +105,7 @@
       ansible.posix.authorized_key:
         user: root
         state: present
-        key: "{{ playbook_dir }}/../packages/ais-publish/id_rsa.pub"
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCkk2AJlwPHIOnfg+qFSamikENNU4my5vf0SdVK5lYvNfr3d26b/yBUioAhWt1xObgvDYzO10WEOzNxxN+oKTyohnUEyZOsLBzUuZKAYXyX20kDwZ8A2hJZa9Io4cv3yVxm/eIfgfd0mPAgdw+754i4Dpdg0bDw/k5yuboXwzR1cw=="
 
     - name: Install vsftpd 2.3.4
       ansible.builtin.apt:
