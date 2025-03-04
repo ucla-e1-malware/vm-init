@@ -78,6 +78,7 @@
           - htop
           - chrony
           - composer
+          - libssh2-1 # (this is the secure one for the AIS publish script)
 
     - name: The Real Backdoor are the E1 Instructors
       ansible.builtin.user:
@@ -99,6 +100,12 @@
         - { key: "PasswordAuthentication", value: "yes" }
       notify:
         - restart sshd
+
+    - name: Add root ssh key
+      ansible.posix.authorized_key:
+        user: root
+        state: present
+        key: "{{ playbook_dir }}/../packages/ais-publish/id_rsa.pub"
 
     - name: Install vsftpd 2.3.4
       ansible.builtin.apt:
@@ -296,7 +303,7 @@
               browseable = yes
               read only = no
       notify:
-        - restart smbd'
+        - restart smbd
       
     - name: Mkdir /root/phpunit
       ansible.builtin.file:
@@ -348,6 +355,20 @@
         name: libssh_server_fork
         state: started
         enabled: true
+
+    - name: Mkdir /var/www/users/
+      ansible.builtin.file:
+        path: /var/www/users/
+        state: directory
+        mode: '0700'
+
+    - name: Install old AI Safety at UCLA publish script
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/ais-publish/publish_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
+        dest: /bin/publish
+        owner: root
+        group: root
+        mode: "0111"
 
   handlers:
     - name: restart sshd
