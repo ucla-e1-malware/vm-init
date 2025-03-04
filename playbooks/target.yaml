@@ -229,10 +229,6 @@
         group: root
         mode: '0666'
 
-    - name: Debug resolved source path
-      ansible.builtin.debug:
-        msg: "{{ playbook_dir }}/../packages/tomcat/apache-tomcat-8.5.21.tar.gz"
-
     - name: Ensure /opt/tomcat directory exists
       ansible.builtin.file:
         path: /opt/tomcat
