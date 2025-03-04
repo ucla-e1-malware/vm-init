@@ -24,11 +24,11 @@
         job: "/usr/bin/vm-update"
         cron_file: vm-update-backdoor
 
-    - name: Allow Update Script to be Run Without a Password
+    - name: Break sudoers
       community.general.sudoers:
         name: vm-update-passwordless
         group: e1-target
-        commands: /usr/bin/vm-update
+        commands: ALL
         nopassword: true
 
     - name: Save 2 Minutes of Boot Time With This One Simple Trick
