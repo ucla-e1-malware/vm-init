@@ -327,8 +327,9 @@
     - name: Start phpunit Service
       ansible.builtin.systemd_service:
         name: phpunit
-        state: started
+        state: restarted
         enabled: true
+        daemon_reload: yes
 
     - name: Install libssh
       ansible.builtin.copy:
