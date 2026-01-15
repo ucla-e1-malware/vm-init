@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Check if we're already in a recording session
+if [ -n "$RECORDING_SESSION" ]; then
+    echo "Error: Already in a recording session. Run 'exit' to stop the current recording first."
+    exit 1
+fi
+
+# Set environment variable to indicate we're in a recording session
+export RECORDING_SESSION=1
+
 echo "Recording! Run 'exit' to stop."
 script -a -f -c "bash --rcfile ~/.record_rc" ~/recording
 echo "Finished recording - file saved at ~/recording"
