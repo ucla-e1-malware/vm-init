@@ -114,5 +114,5 @@
 
     - name: Sets default branch name to main
       ansible.builtin.command:
-        cmd: git config --global init.defaultBranch main
+        cmd: git config --system init.defaultBranch main
         
