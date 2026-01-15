@@ -111,4 +111,8 @@
       ansible.builtin.command:
         cmd: resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
       ignore_errors: true
+
+    - name: Sets default branch name to main
+      ansible.builtin.command:
+        cmd: git config --global init.defaultBranch main
         
