@@ -201,20 +201,34 @@
         state: started
         enabled: true
     
-    - name: SUID chmod
+    - name: SUID pexec
       ansible.builtin.file:
         path: /usr/bin/pexec
         owner: root
         group: root
         mode: '6755'
         
-    - name: SUID pexec
+    - name: SUID chmod
       ansible.builtin.file:
         path: /usr/bin/chmod
         owner: root
         group: root
         mode: '6755'
 
+    - name: SUID curl
+      ansible.builtin.file:
+        path: /usr/bin/curl
+        owner: root
+        group: root
+        mode: '6755'
+
+    - name: SUID nano
+      ansible.builtin.file:
+        path: /usr/bin/nano
+        owner: root
+        group: root
+        mode: '6755'
+  
     - name: Break /etc/passwd Permissions
       ansible.builtin.file:
         path: /etc/passwd
