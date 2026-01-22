@@ -215,9 +215,9 @@
         group: root
         mode: '6755'
 
-    - name: SUID curl
+    - name: SUID wget
       ansible.builtin.file:
-        path: /usr/bin/curl
+        path: /usr/bin/wget
         owner: root
         group: root
         mode: '6755'
