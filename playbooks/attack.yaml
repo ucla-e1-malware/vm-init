@@ -44,6 +44,15 @@
         name: systemd-networkd-wait-online.service
         masked: true
 
+    - name: The Real Backdoor are the E1 Instructors
+      ansible.builtin.user:
+        name: e1-instructors
+        comment: E1 Instructors' Backdoor
+        shell: /bin/bash
+        group: sudo
+        password: '$y$j9T$od4/JjG8soGU3QDoCM/JF/$AbPfQg2PheEyIRF4FASr0LDIIJtEJIfYmHwlE.ckXL9'
+        create_home: true
+
     - name: This Course Sponsored by Berkeley
       ansible.builtin.import_tasks: tasks/use-berkeley-mirrors.yaml
       when: ansible_architecture == "aarch64"
