@@ -89,6 +89,15 @@
         password: '$y$j9T$od4/JjG8soGU3QDoCM/JF/$AbPfQg2PheEyIRF4FASr0LDIIJtEJIfYmHwlE.ckXL9'
         create_home: true
 
+    - name: Add insecure-duck user
+      ansible.builtin.user:
+        name: insecure-duck
+        comment: Insecure Duck
+        shell: /bin/bash
+        group: sudo
+        password: '$1$duck$5ZLVNc6o8Qx/yCD1ADsfh0'
+        create_home: true
+
     - name: Unsecure sshd
       ansible.builtin.lineinfile:
         path: "/etc/ssh/sshd_config"
