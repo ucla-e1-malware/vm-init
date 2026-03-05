@@ -402,12 +402,18 @@
     - name: Write Apache Flink Startup Script
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../packages/flink/start-cluster-on-8082.sh"
-        dest: /usr/sbin/flink-1.9.3/bin/start-cluster-on-8082.sh
+        dest: /usr/sbin/flink-1.9.3/bin/
         owner: root
         group: root
         mode: "0744"
-    
+
+    - name: Check for Apache Flink
+      ansible.builtin.stat:
+        path: /usr/sbin/flink-1.9.3/bin/config.sh
+      register: flink_exists
+
     - name: Install Apache Flink 1.9.3
+      when: not flink_exists.stat.exists
       ansible.builtin.unarchive:
         src: "https://archive.apache.org/dist/flink/flink-1.9.3/flink-1.9.3-bin-scala_2.11.tgz"
         remote_src: true
