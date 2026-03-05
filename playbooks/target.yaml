@@ -298,6 +298,14 @@
         mode: '0755'
       loop: "{{ shell_scripts.files }}"
 
+    - name: Install Apache Struts2
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/struts2/struts2-blank.war"
+        dest: /opt/tomcat/apache-tomcat-8.5.21/webapps/
+        owner: root
+        group: root
+        mode: "0744"
+
     - name: Write tomcat Service
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../packages/tomcat/tomcat.service"
@@ -306,7 +314,7 @@
         group: root
         mode: "0644"
 
-    - name: Start proftpd Service
+    - name: Start tomcat Service
       ansible.builtin.systemd_service:
         name: tomcat
         state: started
