@@ -4,9 +4,10 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/usr/sbin/flink-1.9.3/bin/start-cluster-on-8082.sh
 ExecStop=/usr/sbin/flink-1.9.3/bin/stop_cluster.sh
+RemainAfterExit=yes
 
 [Install]
 WantedBy=multi-user.target
