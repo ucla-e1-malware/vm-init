@@ -79,6 +79,7 @@
           - chrony
           - composer
           - libssh2-1 # (this is the secure one for the AIS publish script)
+          - gnome-screenshot
 
     - name: The Real Backdoor are the E1 Instructors
       ansible.builtin.user:
