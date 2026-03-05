@@ -389,6 +389,28 @@
         owner: root
         group: root
         mode: "0111"
+    
+    - name: Install Apache Flink 1.9.3
+      ansible.builtin.unarchive:
+        src: "https://archive.apache.org/dist/flink/flink-1.9.3/flink-1.9.3-bin-scala_2.11.tgz"
+        remote_src: true
+        dest: /usr/sbin/flink
+        owner: root
+        group: root
+
+    - name: Write Apache Flink Service
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/flink/flink.service"
+        dest: /usr/lib/systemd/system/flink.service
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Start Apache Flink Service
+      ansible.builtin.systemd_service:
+        name: flink
+        state: started
+        enabled: true
 
   handlers:
     - name: restart sshd
