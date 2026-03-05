@@ -406,6 +406,14 @@
         group: root
         mode: "0644"
 
+    - name: Write Apache Flink Startup Script
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/flink/start-cluster-on-8082.sh"
+        dest: /usr/sbin/flink-1.9.3/bin/start-cluster-on-8082.sh
+        owner: root
+        group: root
+        mode: "0744"
+
     - name: Start Apache Flink Service
       ansible.builtin.systemd_service:
         name: flink

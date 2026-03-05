@@ -5,7 +5,7 @@ After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/sbin/flink-1.9.3/bin/start_cluster.sh
+ExecStart=/usr/sbin/flink-1.9.3/bin/start_cluster-on-8082.sh
 ExecStop=/usr/sbin/flink-1.9.3/bin/stop_cluster.sh
 
 [Install]
