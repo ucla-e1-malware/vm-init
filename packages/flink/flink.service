@@ -1,0 +1,12 @@
+[Unit]
+Description=Apache Flink 1.9.3
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/flink/flink-1.9.3/bin/start_cluster.sh
+ExecStop=/usr/sbin/flink/flink-1.9.3/bin/stop_cluster.sh
+
+[Install]
+WantedBy=multi-user.target
