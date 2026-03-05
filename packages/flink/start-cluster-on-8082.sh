@@ -17,8 +17,7 @@
 # limitations under the License.
 ################################################################################
 
-bin=`dirname "$0"`
-bin=`cd "$bin"; pwd`
+bin=`cd "/usr/sbin/flink-1.9.3/bin/"; pwd`
 
 . "$bin"/config.sh
 
