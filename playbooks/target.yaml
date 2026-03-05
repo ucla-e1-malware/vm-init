@@ -394,7 +394,7 @@
       ansible.builtin.unarchive:
         src: "https://archive.apache.org/dist/flink/flink-1.9.3/flink-1.9.3-bin-scala_2.11.tgz"
         remote_src: true
-        dest: /usr/sbin/flink
+        dest: /usr/sbin
         owner: root
         group: root
 
