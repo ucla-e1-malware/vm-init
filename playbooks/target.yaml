@@ -463,6 +463,45 @@
         state: started
         enabled: true
 
+    - name: Ensure /opt/king directory exists
+      ansible.builtin.file:
+        path: /opt/king
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Install King of the Hill app
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/koth/app.py"
+        dest: /opt/king/app.py
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Create default king.txt
+      ansible.builtin.copy:
+        content: ""
+        dest: /king.txt
+        owner: root
+        group: root
+        mode: "0666"
+        force: false
+
+    - name: Write king-app service
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../packages/koth/king-app.service"
+        dest: /usr/lib/systemd/system/king-app.service
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Start king-app Service
+      ansible.builtin.systemd_service:
+        name: king-app
+        state: started
+        enabled: true
+
   handlers:
     - name: restart sshd
       ansible.builtin.service:

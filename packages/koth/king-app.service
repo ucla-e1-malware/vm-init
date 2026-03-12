@@ -1,0 +1,12 @@
+[Unit]
+Description=King App Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /opt/king/app.py
+WorkingDirectory=/opt/king
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
