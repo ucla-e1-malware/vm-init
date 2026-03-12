@@ -8,6 +8,25 @@
       ansible.builtin.hostname:
         name: e1-target.local
 
+    - name: Set timezone
+      community.general.timezone:
+        name: America/Los_Angeles
+
+    - name: Ensure Ansible PPA is present
+      ansible.builtin.apt_repository:
+        repo: ppa:ansible/ansible
+        state: present
+
+    - name: Ensure e1-target user exists
+      ansible.builtin.user:
+        name: e1-target
+        comment: e1-target
+        groups: adm, cdrom, dip, lxd, plugdev, sudo
+        shell: /bin/bash
+        password: '$6$drplX3eDsWA2GGX1$pOhLDGP9IJmSRyqx26FoKAa568/5Qiky5H0KWCnjJkYP320rV7icQ4Zp0kwpq7tE0M4cjMh0upICGCN5GHxzs0'
+        create_home: true
+        update_password: on_create
+
     - name: Copy/Update Update Script
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../vm-update.sh"
@@ -54,6 +73,8 @@
       ansible.builtin.apt:
         update_cache: true
         pkg:
+          - software-properties-common
+          - ansible
           - python-is-python3
           - git
           - openssh-server

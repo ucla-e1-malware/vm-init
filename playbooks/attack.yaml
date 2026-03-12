@@ -8,6 +8,34 @@
       ansible.builtin.hostname:
         name: e1-attack.local
 
+    - name: Set timezone
+      community.general.timezone:
+        name: America/Los_Angeles
+
+    - name: Ensure Ansible PPA is present
+      ansible.builtin.apt_repository:
+        repo: ppa:ansible/ansible
+        state: present
+
+    - name: Ensure e1-attack user exists
+      ansible.builtin.user:
+        name: e1-attack
+        comment: e1-attack
+        groups: adm, cdrom, dip, lxd, plugdev, sudo
+        shell: /bin/bash
+        password: '$6$4rkRwfAkZFoQFv9a$.s6W/EIJYj5UQcJ5THKHkTzwHKI8jp5P8YdVlIESHEA1plICaP9QiqLhmRc2dLq5ReBFeopxTi7wdaxhWvDqV.'
+        create_home: true
+        update_password: on_create
+
+    - name: Ensure SSH allows password authentication
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regex: "^(#)?PasswordAuthentication"
+        line: "PasswordAuthentication yes"
+        state: present
+      notify:
+        - restart sshd
+
     - name: Copy/Update Update Script
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../vm-update.sh"
@@ -61,6 +89,8 @@
       ansible.builtin.apt:
         update_cache: true
         pkg:
+          - software-properties-common
+          - ansible
           - python-is-python3
           - python3
           - python3-pip
@@ -124,4 +154,10 @@
     - name: Sets default branch name to main
       ansible.builtin.command:
         cmd: git config --system init.defaultBranch main
+
+  handlers:
+    - name: restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
         
