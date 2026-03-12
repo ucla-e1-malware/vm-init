@@ -16,7 +16,7 @@ die () {
 
 # returns true if the package $1 is not installed
 needs_install () {
-    [ "$(dpkg -l "$1" > /dev/null 2>&1; echo $?)" -eq 1 ]
+    ! dpkg -s "$1" > /dev/null 2>&1
 }
 
 # figure out which VM we're on
