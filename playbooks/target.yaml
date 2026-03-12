@@ -485,7 +485,7 @@
         dest: /king.txt
         owner: root
         group: root
-        mode: "0666"
+        mode: "0466"
         force: false
 
     - name: Write king-app service
