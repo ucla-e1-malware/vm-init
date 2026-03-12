@@ -64,7 +64,7 @@
 
     - name: This Course Sponsored by Berkeley
       ansible.builtin.import_tasks: tasks/use-berkeley-mirrors.yaml
-      when: ansible_architecture == "aarch64"
+      when: ansible_facts.architecture == "aarch64"
 
     - name: Expand LVM if space available
       ansible.builtin.command:
@@ -149,7 +149,7 @@
       ansible.builtin.apt:
         update_cache: false
         force: yes
-        deb: "{{ playbook_dir }}/../packages/vsftpd/vsftpd_2.3.4-2_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64.deb"
+        deb: "{{ playbook_dir }}/../packages/vsftpd/vsftpd_2.3.4-2_{{ (ansible_facts.architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64.deb"
     
     - name: Prevent APT From Upgrading vsftpd
       ansible.builtin.dpkg_selections:
@@ -163,7 +163,7 @@
     
     - name: Install Shellshock Bash
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../packages/shellshock/bash_4.1-3_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
+        src: "{{ playbook_dir }}/../packages/shellshock/bash_4.1-3_{{ (ansible_facts.architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
         dest: /bin/bash_4.1-3
         owner: root
         group: root
@@ -219,7 +219,7 @@
     
     - name: Install proftpd
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../packages/proftpd/proftpd_1.3.5_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
+        src: "{{ playbook_dir }}/../packages/proftpd/proftpd_1.3.5_{{ (ansible_facts.architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
         dest: /usr/sbin/proftpd
         owner: root
         group: root
@@ -393,7 +393,7 @@
 
     - name: Install libssh
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../packages/libssh/ssh_server_fork_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
+        src: "{{ playbook_dir }}/../packages/libssh/ssh_server_fork_{{ (ansible_facts.architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
         dest: /usr/sbin/ssh_server_fork
         owner: root
         group: root
@@ -421,7 +421,7 @@
 
     - name: Install old AI Safety at UCLA publish script
       ansible.builtin.copy:
-        src: "{{ playbook_dir }}/../packages/ais-publish/publish_{{ (ansible_architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
+        src: "{{ playbook_dir }}/../packages/ais-publish/publish_{{ (ansible_facts.architecture == 'aarch64') | ansible.builtin.ternary('arm', 'amd') }}64"
         dest: /bin/publish
         owner: root
         group: root

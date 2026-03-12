@@ -90,7 +90,7 @@
 
     - name: This Course Sponsored by Berkeley
       ansible.builtin.import_tasks: tasks/use-berkeley-mirrors.yaml
-      when: ansible_architecture == "aarch64"
+      when: ansible_facts.architecture == "aarch64"
 
     - name: Install Random APT Packages
       ansible.builtin.apt:
