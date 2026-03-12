@@ -12,10 +12,17 @@
       community.general.timezone:
         name: America/Los_Angeles
 
+    - name: Check if Ansible PPA is already configured
+      ansible.builtin.shell: grep -r ansible /etc/apt/sources.list.d/ 2>/dev/null
+      register: ansible_ppa_check
+      changed_when: false
+      failed_when: false
+
     - name: Ensure Ansible PPA is present
       ansible.builtin.apt_repository:
         repo: ppa:ansible/ansible
         state: present
+      when: ansible_ppa_check.rc != 0
 
     - name: Ensure e1-attack user exists
       ansible.builtin.user:
